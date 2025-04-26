@@ -11,7 +11,7 @@ from models.utils import prepare_model_data
 set_random_seed(12345)
 
 is_fixed = True
-is_together = True
+is_together = False
 identifier = ('fixed-' if is_fixed else 'not-fixed-') + ('together-' if is_together else 'not-together-') + 'conv'
 checkpoint_to_test = 100
 model = load_model('..\\checkpoints\\conv\\' + identifier + '-' + str(checkpoint_to_test) + '.keras', compile=False)

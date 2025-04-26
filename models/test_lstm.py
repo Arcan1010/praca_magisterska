@@ -12,7 +12,7 @@ set_random_seed(12345)
 
 is_fixed = True
 is_together = True
-checkpoint_to_test = 50
+checkpoint_to_test = 2
 identifier = ('fixed-' if is_fixed else 'not-fixed-') + ('together-' if is_together else 'not-together-') + 'lstm'
 model = load_model('..\\checkpoints\\lstm\\' + identifier + '-' + str(checkpoint_to_test) + '.keras', compile=False)
 

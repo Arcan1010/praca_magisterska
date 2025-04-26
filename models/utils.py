@@ -59,6 +59,5 @@ def create_windows(x_org, y_org, input_size, accepting_peak_half_window, window_
         for j in range((input_size - window_size) // stride + 1):
             x.append(np.array(new_x[j * stride: j * stride + window_size]))
             y_result = np.array(new_y[j * stride: j * stride + window_size])
-            should_find_signal = 1 in y_result[window_size // 2 - accepting_peak_half_window: window_size // 2 + accepting_peak_half_window]
-            y.append(1 if should_find_signal else 0)
+            y.append(y_result[window_size // 2])
     return np.array(x), np.array(y)
