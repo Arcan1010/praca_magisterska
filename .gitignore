@@ -1,2 +1,4 @@
-checkpoints
+checkpoints/
 .idea/
+.venv/
+models/__pycache__/

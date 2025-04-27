@@ -37,6 +37,7 @@ def get_exterior(package_number):
     return json.load(open(get_data_path(package_number)))['exterior']
 
 def prepare_output_with_epsilon(output):
+    output = np.array(output)
     half_epsilon = 10
     ones_indices = np.where(output == 1)[0]
     for idx in ones_indices:
@@ -46,7 +47,9 @@ def prepare_output_with_epsilon(output):
     return output
 
 def get_true_output(package_number):
-    return json.load(open(get_result_path(package_number)))
+    result = json.load(open(get_result_path(package_number)))
+    return prepare_output_with_epsilon(result)
 
 def get_fixed_output(package_number):
-    return json.load(open(get_fixed_path(package_number)))
+    result = json.load(open(get_fixed_path(package_number)))
+    return prepare_output_with_epsilon(result)
