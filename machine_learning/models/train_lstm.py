@@ -4,14 +4,13 @@ import keras
 import matplotlib.pyplot as plt
 import numpy as np
 
-from keras.src.layers import LSTM, InputLayer
+from keras.src.layers import LSTM, InputLayer, Dense
 from keras.src.metrics import Precision, Recall
 from keras.src.utils import set_random_seed
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from keras import Sequential
 
 from load_data import training_indexes
-from utils import weighted_binary_crossentropy, prepare_model_data, weighted_binary_crossentropy_with_static_weights
+from utils import weighted_binary_crossentropy, prepare_model_data
 
 set_random_seed(12345)
 

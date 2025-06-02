@@ -6,8 +6,6 @@ from load_data import get_interior, get_true_output, get_exterior, get_fixed_out
 
 def weighted_binary_crossentropy(y_true, y_pred):
     ones_count = tf.reduce_sum(y_true)
-    # zeros_count = tf.size(y_true, out_type=tf.float32) - ones_count
-    # total_count = tf.size(y_true, out_type=tf.float32)
     zeros_count = tf.cast(tf.size(y_true, out_type=tf.int32), tf.float32) - ones_count
     total_count = tf.cast(tf.size(y_true, out_type=tf.int32), tf.float32)
 
@@ -15,25 +13,12 @@ def weighted_binary_crossentropy(y_true, y_pred):
     zero_weight = ones_count / total_count * 100
     epsilon = tf.keras.backend.epsilon()
     y_pred = tf.clip_by_value(y_pred, epsilon, 1. - epsilon)
-    bce = y_true * tf.math.log(y_pred + epsilon) # Compute cross entropy from probabilities.
+    bce = y_true * tf.math.log(y_pred + epsilon)
     bce += (1 - y_true) * tf.math.log(1 - y_pred + epsilon)
     bce = -bce
-    weight_vector = y_true * one_weight + (1. - y_true) * zero_weight # Apply the weights to each class individually
+    weight_vector = y_true * one_weight + (1. - y_true) * zero_weight
     weighted_bce = weight_vector * bce
-    return tf.reduce_mean(weighted_bce) # Return the mean error
-
-
-def weighted_binary_crossentropy_with_static_weights(y_true, y_pred):
-    one_weight = 0.998
-    zero_weight = 0.002
-    epsilon = tf.keras.backend.epsilon()
-    y_pred = tf.clip_by_value(y_pred, epsilon, 1. - epsilon)
-    bce = y_true * tf.math.log(y_pred + epsilon) # Compute cross entropy from probabilities.
-    bce += (1 - y_true) * tf.math.log(1 - y_pred + epsilon)
-    bce = -bce
-    weight_vector = y_true * one_weight + (1. - y_true) * zero_weight # Apply the weights to each class individually
-    weighted_bce = weight_vector * bce
-    return tf.reduce_mean(weighted_bce) # Return the mean error
+    return tf.reduce_mean(weighted_bce)
 
 
 def prepare_model_data(data_indexes, input_size, is_fixed, is_together):

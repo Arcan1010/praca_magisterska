@@ -1,4 +1,4 @@
 checkpoints/
 .idea/
 .venv/
-models/__pycache__/
+machine_learning/checkpoints/

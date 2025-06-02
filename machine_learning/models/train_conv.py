@@ -9,7 +9,7 @@ from keras.src.optimizers import Adam
 from keras.src.utils import set_random_seed
 from matplotlib import pyplot as plt
 
-from utils import weighted_binary_crossentropy, prepare_model_data, weighted_binary_crossentropy_with_static_weights
+from utils import weighted_binary_crossentropy, prepare_model_data
 from load_data import training_indexes
 
 set_random_seed(12345)
@@ -61,23 +61,23 @@ def upsample(filters, size):
     return result
 
 down_stack = [
-    downsample(16, 9), # (bs, 8000, 1)
-    downsample(16, 9), # (bs, 4000, 1)
-    downsample(32, 6), # (bs, 2000, 1)
-    downsample(32, 6), # (bs, 1000, 1)
-    downsample(64, 3), # (bs, 500, 1)
-    downsample(64, 3), # (bs, 250, 1)
+    downsample(16, 9), # (bs, 512, 1)
+    downsample(16, 9), # (bs, 256, 1)
+    downsample(32, 6), # (bs, 128, 1)
+    downsample(32, 6), # (bs, 64, 1)
+    downsample(64, 3), # (bs, 32, 1)
+    downsample(64, 3), # (bs, 16, 1)
     ]
 
 up_stack = [
-    upsample(64, 3), # (bs, 250, 1)
-    upsample(32, 3), # (bs, 500, 1)
-    upsample(32, 6), # (bs, 1000, 1)
-    upsample(16, 6), # (bs, 2000, 1)
-    upsample(16, 9), # (bs, 4000, 1)
+    upsample(64, 3), # (bs, 16, 1)
+    upsample(32, 3), # (bs, 32, 1)
+    upsample(32, 6), # (bs, 64, 1)
+    upsample(16, 6), # (bs, 128, 1)
+    upsample(16, 9), # (bs, 256, 1)
     ]
 
-last = Conv1DTranspose(1, 9, strides=2, padding='same', activation='sigmoid')  # (bs, 8000, 1)
+last = Conv1DTranspose(1, 9, strides=2, padding='same', activation='sigmoid')  # (bs, 512, 1)
 
 x = inputs
 
