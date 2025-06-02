@@ -1,0 +1,12 @@
+{
+  "name": "BeeInFrames",
+  "version": "1.0.0",
+  "description": "",
+  "main": "package-details.js",
+  "scripts": {
+    "build": "wds"
+  },
+  "dependencies": {
+    "@web/dev-server": "0.3.3"
+  }
+}

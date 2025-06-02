@@ -1,0 +1,12 @@
+{
+  "name": "FixBeeInFrames",
+  "version": "1.0.0",
+  "description": "",
+  "main": "package-details.js",
+  "scripts": {
+    "build": "wds --watch"
+  },
+  "dependencies": {
+    "@web/dev-server": "^0.4.6"
+  }
+}

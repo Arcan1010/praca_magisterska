@@ -1,0 +1,78 @@
+
+:root {
+    --color1: #fffcca;
+    --color2: #ffffff;
+    --color3: #dedede;
+    --color4: #827f93;
+    --success: #95da95;
+    --inprogress: #d5d5d5;
+}
+
+.main {
+    margin: 2rem;
+    background-color: var(--color1);
+    border-color: #95da95;
+    border-radius: 2rem;
+}
+
+.header {
+    padding: 1rem;
+}
+
+#data-packages-container {
+    padding: 1rem;
+    background-color: var(--color4);
+    border: none;
+    border-radius: 2rem;
+}
+
+video {
+    margin-top: 1rem;
+}
+
+.button {
+    width: 90%;
+    height: 3rem;
+    font-size: 1.7rem;
+    background-color: var(--color2);
+    outline-offset: 0;
+    border-radius: 2rem;
+    border: 0.1rem solid #c7c7c7;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    font-family: "Corbel Light", serif;
+    text-align: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    align-content: center;
+}
+
+.app-title {
+    font-family: "Corbel Light", serif;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.details {
+    text-align: center;
+    background-color: var(--inprogress);
+    border-radius: 2rem;
+    margin-bottom: 2rem;
+}
+
+.success-package {
+    background-color: #7cd967
+}
+
+.package-title {
+    font-size: 1.7rem;
+    font-family: "Corbel", serif;
+    margin: 0.5rem;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: var(--color3);
+    color: white;
+    border-color: #696969;
+}

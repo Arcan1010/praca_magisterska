@@ -2,3 +2,4 @@ checkpoints/
 .idea/
 .venv/
 machine_learning/checkpoints/
+node_modules
