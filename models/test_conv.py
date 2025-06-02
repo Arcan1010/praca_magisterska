@@ -11,9 +11,9 @@ from models.utils import prepare_model_data
 set_random_seed(12345)
 
 is_fixed = True
-is_together = False
+is_together = True
 identifier = ('fixed-' if is_fixed else 'not-fixed-') + ('together-' if is_together else 'not-together-') + 'conv'
-checkpoint_to_test = 100
+checkpoint_to_test = 299
 model = load_model('..\\checkpoints\\conv\\' + identifier + '-' + str(checkpoint_to_test) + '.keras', compile=False)
 
 model.summary()
@@ -33,21 +33,6 @@ for i in range(len(testing_indexes)):
         predicted = model.predict(windowed_x.reshape(1, window_size, 1 if is_together else 2))[0]
         model_out = model_out + predicted.tolist()
 
-    plt.figure(figsize=(10, 6))
-    plt.plot(np.array(model_out), label='Output', color='blue', linewidth=1)
-    plt.plot(new_y_test, label='Real values', color='red', linewidth=1)
-    if is_together:
-        plt.plot(x[i], label='Sensors', color='green', linewidth=1)
-    else:
-        interior, exterior = x[i][:, 0], x[i][:, 1]
-        plt.plot(interior, label='Interior', color='orange', linewidth=1)
-        plt.plot(exterior, label='Exterior', color='green', linewidth=1)
-    plt.title('Porównanie wyjścia modelu i danych referencyjnych')
-    plt.xlabel('Indeks')
-    plt.ylabel('Wartość')
-    plt.legend()
-    plt.show()
-
     threshold = 0.5
     def above_threshold(value):
         return 1 if value >= threshold else 0
@@ -55,11 +40,24 @@ for i in range(len(testing_indexes)):
     above_threshold_vectorized = np.vectorize(above_threshold)
     model_out = above_threshold_vectorized(model_out)
 
+    # Zapis wynikow do pliku #
+    import json
+
+    dane = {
+        'output': np.array(model_out).flatten().tolist(),
+        'real': new_y_test.tolist(),
+        'sensors': x[i].tolist()
+    }
+
+    # with open('..\\pliki-do-podsumowania\\' + str(checkpoint_to_test) + 'conv' + str(testing_indexes[i]) + '.json', 'w') as plik:
+    #     json.dump(dane, plik, indent=4)
+
+
     plt.figure(figsize=(10, 6))
-    plt.plot(np.array(model_out), label='Output', color='blue', linewidth=1)
-    plt.plot(new_y_test, label='Real values', color='red', linewidth=1)
+    plt.plot(np.array(model_out), label='Wyjście sieci', color='blue', linewidth=1)
+    plt.plot(new_y_test, label='Wartości prawdziwe', color='red', linewidth=1)
     if is_together:
-        plt.plot(x[i], label='Sensors', color='green', linewidth=1)
+        plt.plot(x[i], label='Czujniki', color='green', linewidth=1)
     else:
         interior, exterior = x[i][:, 0], x[i][:, 1]
         plt.plot(interior, label='Interior', color=(1, 0.5, 0.0, 0.5), linewidth=1)
@@ -68,6 +66,7 @@ for i in range(len(testing_indexes)):
     plt.xlabel('Indeks')
     plt.ylabel('Wartość')
     plt.legend()
+    # plt.xlim(5500, 6700)
     plt.show()
 
 # -------------------------------------------------------------------------------------------------------------------- #

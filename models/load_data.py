@@ -13,7 +13,7 @@ training_indexes = [1, 2, 3, 4, 5, 6, 7, 8, 9,
                     31, 32, 33, 35, 36, 37, 38, 39,
                     41, 42, 43, 44, 45, 46, 48, 49]
 
-testing_indexes = [0, 34, 10, 47, 20, 30, 40]
+testing_indexes = [20, 30, 0, 40, 47, 34, 10]
 # testing_indexes = [30]
 # testing_indexes = [101]
 
@@ -38,18 +38,20 @@ def get_exterior(package_number):
 
 def prepare_output_with_epsilon(output):
     output = np.array(output)
-    half_epsilon = 10
+    epsilon = 10
     ones_indices = np.where(output == 1)[0]
     for idx in ones_indices:
-        start = max(0, idx - half_epsilon)
-        end = min(len(output), idx + half_epsilon + 1)
+        start = int(max(0, idx - (epsilon / 2)))
+        end = int(min(len(output), idx + (epsilon / 2) + 1))
         output[start:end] = 1
     return output
 
 def get_true_output(package_number):
     result = json.load(open(get_result_path(package_number)))
     return prepare_output_with_epsilon(result)
+    #return json.load(open(get_result_path(package_number)))
 
 def get_fixed_output(package_number):
     result = json.load(open(get_fixed_path(package_number)))
     return prepare_output_with_epsilon(result)
+    #return json.load(open(get_fixed_path(package_number)))
